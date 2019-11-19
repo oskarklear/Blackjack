@@ -1,16 +1,21 @@
+clc
+clear
 cards = [2 2 2 2 3 3 3 3 4 4 4 4 5 5 5 5 6 6 6 6 7 7 7 7 8 8 8 8 9 9 9 9 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10];
 temp = round((rand() * length(cards)));
 dealtCard = cards(temp);
 dealerHand(1) = dealtCard;
 temp = round((rand() * length(cards)));
 dealtCard = cards(temp);
-dealerHand(2) = dealtCard
+dealerHand(2) = dealtCard;
 temp = round((rand() * length(cards)));
 dealtCard = cards(temp);
 playerHand(1) = dealtCard;
 temp = round((rand() * length(cards)));
 dealtCard = cards(temp);
-playerHand(2) = dealtCard
-
-
+playerHand(2) = dealtCard;
+fprintf("The dealer has a %.f and an unknown \n", dealerHand(1));
+fprintf("The dealer has a %.f and a %.f", playerHand(1), playerHand(2));
+hit = input("Would you like to hit or stand? Enter 1 for hit and 0 for stand. \n")
+if input
+    
 
