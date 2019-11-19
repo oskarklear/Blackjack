@@ -3,19 +3,44 @@ clear
 cards = [2 2 2 2 3 3 3 3 4 4 4 4 5 5 5 5 6 6 6 6 7 7 7 7 8 8 8 8 9 9 9 9 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10];
 temp = round((rand() * length(cards)));
 dealtCard = cards(temp);
+cards(temp) = [];
 dealerHand(1) = dealtCard;
 temp = round((rand() * length(cards)));
 dealtCard = cards(temp);
+cards(temp) = [];
 dealerHand(2) = dealtCard;
 temp = round((rand() * length(cards)));
 dealtCard = cards(temp);
+cards(temp) = [];
 playerHand(1) = dealtCard;
 temp = round((rand() * length(cards)));
 dealtCard = cards(temp);
+cards(temp) = [];
 playerHand(2) = dealtCard;
-fprintf("The dealer has a %.f and an unknown \n", dealerHand(1));
-fprintf("The dealer has a %.f and a %.f", playerHand(1), playerHand(2));
-hit = input("Would you like to hit or stand? Enter 1 for hit and 0 for stand. \n")
-if input
-    
+fprintf("The dealer has a %.f and an unknown\n", dealerHand(1));
+fprintf("The player has a %.f and a %.f \n", playerHand(1), playerHand(2));
+hit = input("Would you like to hit or stand? Enter 1 for hit and 0 for stand. \n");
+bust = 0;
+blackjack = 0;
+counter = 3;
+playerOutput = "You have a %.f, %.f, ";
+while hit == 1 && bust == 0 && blackjack == 0
+    temp = round((rand() * length(cards)));
+    dealtCard = cards(temp);
+    cards(temp) = [];
+    playerHand(counter) = dealtCard;
+    counter = counter + 1;
+    disp('Your cards are now ');
+    disp(playerHand);
+    fprintf("Your total is %.f", sum(playerHand));
+    if (sum(playerHand) > 21)
+        bust = 1;
+        disp('Oh no! You bust! Dealer wins!');
+    elseif (sum(playerHand) == 21)
+        blackjack = 1;
+        disp('Blackjack! You win!');
+    else
+        hit = input("Would you like to hit or stand? Enter 1 for hit and 0 for stand. \n");
+    end
+end
 
