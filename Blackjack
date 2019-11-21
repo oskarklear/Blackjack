@@ -9,6 +9,9 @@ temp = round((rand() * length(cards)));
 dealtCard = cards(temp);
 cards(temp) = [];
 dealerHand(2) = dealtCard;
+if (sum(dealerHand) > 21)
+        dealerHand(counter) = 1;
+    end
 temp = round((rand() * length(cards)));
 dealtCard = cards(temp);
 cards(temp) = [];
@@ -17,6 +20,9 @@ temp = round((rand() * length(cards)));
 dealtCard = cards(temp);
 cards(temp) = [];
 playerHand(2) = dealtCard;
+if (sum(playerHand) > 21)
+        playerHand(counter) = 1;
+    end
 fprintf("The dealer has a %.f and an unknown\n", dealerHand(1));
 fprintf("You have a %.f and a %.f \n", playerHand(1), playerHand(2));
 fprintf("Your total is %.f \n", sum(playerHand));
