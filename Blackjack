@@ -1,6 +1,6 @@
 clc
 clear
-cards = [2 2 2 2 3 3 3 3 4 4 4 4 5 5 5 5 6 6 6 6 7 7 7 7 8 8 8 8 9 9 9 9 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10];
+cards = [2 2 2 2 3 3 3 3 4 4 4 4 5 5 5 5 6 6 6 6 7 7 7 7 8 8 8 8 9 9 9 9 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 11 11 11 11];
 temp = round((rand() * length(cards)));
 dealtCard = cards(temp);
 cards(temp) = [];
@@ -18,9 +18,11 @@ dealtCard = cards(temp);
 cards(temp) = [];
 playerHand(2) = dealtCard;
 fprintf("The dealer has a %.f and an unknown\n", dealerHand(1));
-fprintf("The player has a %.f and a %.f \n", playerHand(1), playerHand(2));
+fprintf("You have a %.f and a %.f \n", playerHand(1), playerHand(2));
+fprintf("Your total is %.f \n", sum(playerHand));
 hit = input("Would you like to hit or stand? Enter 1 for hit and 0 for stand. \n");
 bust = 0;
+endGame = 0;
 blackjack = 0;
 counter = 3;
 playerOutput = "You have a %.f, %.f, ";
@@ -29,18 +31,65 @@ while hit == 1 && bust == 0 && blackjack == 0
     dealtCard = cards(temp);
     cards(temp) = [];
     playerHand(counter) = dealtCard;
+    if (sum(playerHand) > 21)
+        playerHand(counter) = 1;
+    end
     counter = counter + 1;
     disp('Your cards are now ');
     disp(playerHand);
-    fprintf("Your total is %.f", sum(playerHand));
+    fprintf("Your total is %.f \n", sum(playerHand));
     if (sum(playerHand) > 21)
         bust = 1;
         disp('Oh no! You bust! Dealer wins!');
+        endGame = 1;
     elseif (sum(playerHand) == 21)
         blackjack = 1;
         disp('Blackjack! You win!');
+        endGame = 1;
     else
         hit = input("Would you like to hit or stand? Enter 1 for hit and 0 for stand. \n");
     end
 end
-
+if (endGame == 0)
+counter = 1;
+if (hit == 0)
+    fprintf("You stand.\n");
+    while (sum(dealerHand) <= 17)
+    temp = round((rand() * length(cards)));
+    dealtCard = cards(temp);
+    cards(temp) = [];
+    dealerHand(counter) = dealtCard;
+    if (sum(dealerHand) > 21)
+        dealerHand(counter) = 1;
+    end
+    counter = counter + 1;
+    disp('Dealer cards are now');
+    disp(dealerHand);
+    fprintf("Dealer total is %.f \n", sum(dealerHand));
+    if (sum(dealerHand) == 21)
+        fprintf("Dealer Blackjack! You lose!");
+        endGame = 1;
+    elseif (sum(dealerHand) > 21)
+        fprintf("Dealer busts! You win!");
+        endGame = 1;
+    elseif (sum(dealerHand) >= 17)
+        fprintf("Dealer stands. \n");
+    end
+    end
+    end
+end
+if (endGame == 0)
+    fprintf("Player final total is %.f\n", sum(playerHand));
+    fprintf("Dealer final total is %.f\n", sum(dealerHand));
+    if (sum(playerHand) > sum(dealerHand))
+        fprintf("You have the higher total! You win!")
+    elseif (sum(playerHand) < sum(dealerHand))
+        fprintf("The dealer has the higher total! You lose!")
+    else
+        fprintf("Tie! Nobody wins!");
+    end
+end
+           
+        
+    
+    
