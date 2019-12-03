@@ -1,6 +1,8 @@
 clc
 clear
+%Create array for standard deck of cards
 cards = [2 2 2 2 3 3 3 3 4 4 4 4 5 5 5 5 6 6 6 6 7 7 7 7 8 8 8 8 9 9 9 9 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 11 11 11 11];
+%Add cards from deck array to dealer hand
 temp = round((rand() * length(cards)));
 dealtCard = cards(temp);
 cards(temp) = [];
@@ -9,9 +11,11 @@ temp = round((rand() * length(cards)));
 dealtCard = cards(temp);
 cards(temp) = [];
 dealerHand(2) = dealtCard;
+%If an ace sets dealer hand over 21, set 11 to 1
 if (sum(dealerHand) > 21)
         dealerHand(counter) = 1;
     end
+%Add cards from deck array to player hand
 temp = round((rand() * length(cards)));
 dealtCard = cards(temp);
 cards(temp) = [];
@@ -20,18 +24,24 @@ temp = round((rand() * length(cards)));
 dealtCard = cards(temp);
 cards(temp) = [];
 playerHand(2) = dealtCard;
+%If an ace sets player hand over 21, set 11 to 1
 if (sum(playerHand) > 21)
         playerHand(counter) = 1;
     end
 fprintf("The dealer has a %.f and an unknown\n", dealerHand(1));
 fprintf("You have a %.f and a %.f \n", playerHand(1), playerHand(2));
 fprintf("Your total is %.f \n", sum(playerHand));
+%If player has blackjack, end the game.
+if (sum(playerHand) == 21)
+    fprintf("Blackjack! You win!");
+    exit;
+end
 hit = input("Would you like to hit or stand? Enter 1 for hit and 0 for stand. \n");
 bust = 0;
 endGame = 0;
 blackjack = 0;
 counter = 3;
-playerOutput = "You have a %.f, %.f, ";
+%While player wants to hit, does not have blackjack, and is not busted, add a new card to the player hand
 while hit == 1 && bust == 0 && blackjack == 0
     temp = round((rand() * length(cards)));
     dealtCard = cards(temp);
@@ -56,8 +66,10 @@ while hit == 1 && bust == 0 && blackjack == 0
         hit = input("Would you like to hit or stand? Enter 1 for hit and 0 for stand. \n");
     end
 end
+%If the game is not over yet, reset counter
 if (endGame == 0)
 counter = 1;
+%If player decides to stand, cards are added to the dealer hand from the deck until the dealer busts, stands, or gets blackjack
 if (hit == 0)
     fprintf("You stand.\n");
     while (sum(dealerHand) <= 17)
@@ -84,6 +96,7 @@ if (hit == 0)
     end
     end
 end
+%If both the player and the dealer have not busted or won, compare both hands to determine winner
 if (endGame == 0)
     fprintf("Player final total is %.f\n", sum(playerHand));
     fprintf("Dealer final total is %.f\n", sum(dealerHand));
